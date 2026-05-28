@@ -144,3 +144,42 @@ Logo, os condicionamentos são iguais
 Desse modo, basta analisar o comportamento do condicionamento da matriz de L_{X} quando d e m variam, 
 pois este será igual ao da matriz de R_{Xd}.
 =#
+
+
+#=
+# Letra f)
+
+### === Complexidade para calcular na base canônica === ###
+
+# == L_{X} == #
+A complexidade para se calcular a matriz V de L_{X} é O(md), pois, dado o conjunto X = {x_{1}, ..., x_{m}}
+de pontos, calculamos as m(d + 1) entradas da matriz, cada uma com custo O(1) pois V_{ij} = x_{i}^{j - 1} é
+uma exponenciação de custo O(1).
+
+# == R_{X, d} == #
+Enquanto isso, para calcular a matriz v† 
+
+### === Complexidade para calcular na base de Lagrange === ###
+
+# == L_{X} == #
+O custo computacional para calcular a matriz de L_{X} na base de lagrange é O(d^{2}m). As n-ésima linha da matriz L
+de L_{X} é L_{X}(p_{n}), L_{X} aplicado no n-ésimo polinômio da base de lagrange. Como p_{i}(x_{j}) = δ_{ij} para
+1 ≤ i ≤ d + 1, 1 ≤ j ≤ d + 1, então o bloco (d + 1) x (d + 1) superior de L será a identidade. Se m = d + 1, então
+L é simplesmente a identidade (E R_{X, d} também será!), um resultado muito bonito pois o condicionamento será 1,
+o condicionamento perfeito. Porém, quando m > d + 1, teremos um bloco (m - d - 1) x (d + 1) de valores que a priore
+não temos muitas informações. O que sabemos é que L_{ij} = p_{i}(x_{j}) para m ≥ i ≥ d + 2
+
+Para colocar as d + 1 entradas 1 na diagonal do bloco identidade, são necessárias d + 1 operações. Para calcular
+as demais entradas, seguimos o seguinte algoritmo:
+Analisamos coluna por coluna. O polinômio de lagrange é p_{i}(x) = \prod_{j \neq i}^{d + 1}\frac{x-x_{j}}{x_{i} - x_{j}}
+Vamos calcular apenas uma vez o denominador. São d subtrações e d - 1 multiplicações. Ou seja, 2d - 1 operações para
+calcular o denominador. Para cada uma das m - d - 1 entradas da coluna, devemos calcular \prod_{j \neq i}^{d + 1} x-x_{j}
+e depois dividir pelo denominador já calculado. No numerador fazemos 2d - 1 operações, e com a divisão vamos para 2d ope-
+rações. Logo, para cada coluna fazemos (2d - 1) + (m - d - 1)(2d) operações. Como são d + 1 colunas, são necessárias
+[(2d - 1) + (m - d - 1)(2d)](d + 1) = 2d^{2}m - 2d^{3} - d + 2dm - 2d^{2} - 1 operações. Somado com as d + 1 da identidade
+obtemos 2d^{2}m - 2d^{3} + 2dm - 2d^{2}. 
+
+# == R_{X, d} == #
+Infelizmente, não temos muita informação a respeito das últimas (m - d - 1) linhas da matriz de L_{X}. Por isso, não há
+truques para calcular R_{X, d}. Por 
+=#
