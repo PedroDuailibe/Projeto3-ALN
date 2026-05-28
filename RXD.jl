@@ -1,4 +1,5 @@
 using LinearAlgebra
+using Plots
 
 function R_Xd_manual(X, d, b)
     m = length(X)
@@ -79,4 +80,44 @@ function teste_linearidade()
     end
 end
 
-teste_linearidade()
+function cond_Lx(x, m, d) 
+    V = zeros(m, d + 1)
+    for i in 1:m
+        for j in 0:d
+            V[i, j+1] = x[i]^j
+        end
+    end
+
+    return cond(V)
+end
+
+function teste_cond_d()
+    grau_polinomio = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    x = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    d = zeros(10)
+
+    for i in 1:10
+        d[i] = log(cond_Lx(x, 6, i))
+    end
+
+    plot(grau_polinomio, d, marker=:circle)
+
+end
+
+function teste_cond_m()
+    numero_pontos = [6, 7, 8, 9, 10]
+    d = zeros(5)
+
+    for i in 6:10
+
+        x = zeros(i)
+        for j in 1:i
+            x[j] = j
+        end
+
+        d[i - 5] = log(cond_Lx(x, i, 5))
+    end
+
+    plot(numero_pontos, d, marker=:circle)
+end
+teste_cond_m()
